@@ -79,8 +79,8 @@ export class UserController {
   @UseInterceptors(FileInterceptor("file",
     {
       storage: diskStorage({
-        // destination: process.cwd() + "http://128.199.223.79:8080/public/img",
-        destination: "http://128.199.223.79:8080/public/img",
+        destination: process.cwd() + "http://128.199.223.79:8080/public/img",
+        // destination: "http://128.199.223.79:8080/public/img/",
 
         filename: (req, file, callback) => callback(null, new Date().getTime() + file.originalname) // đổi tên hình 
       })
