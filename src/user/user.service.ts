@@ -140,7 +140,7 @@ export class UserService {
       let { destination, filename } = file;
       let uploadImage = {
         image_name: filename,
-        link: destination,
+        link: destination + filename,
         user_id: userId
       }
       await this.prisma.image.create({ data: uploadImage });

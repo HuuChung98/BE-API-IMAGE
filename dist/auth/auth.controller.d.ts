@@ -2,7 +2,7 @@ import { AuthService } from './auth.service';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
-    login(body: any): Promise<import("@prisma/client/runtime").GetResult<{
+    login(body: any): Promise<import("@prisma/client/runtime/library").GetResult<{
         user_id: number;
         full_name: string;
         email: string;

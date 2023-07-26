@@ -4,15 +4,15 @@ import { PrismaClient } from '@prisma/client';
 export declare class UserService {
     private updateUserDto;
     constructor(updateUserDto: UpdateUserDto);
-    prisma: PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation, import("@prisma/client/runtime").DefaultArgs>;
-    getImage(): Promise<(import("@prisma/client/runtime").GetResult<{
+    prisma: PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    getImage(): Promise<(import("@prisma/client/runtime/library").GetResult<{
         image_id: number;
         image_name: string;
         link: string;
         description: string;
         user_id: number;
     }, unknown> & {})[]>;
-    findImage(name: string): Promise<(import("@prisma/client/runtime").GetResult<{
+    findImage(name: string): Promise<(import("@prisma/client/runtime/library").GetResult<{
         image_id: number;
         image_name: string;
         link: string;
@@ -20,7 +20,7 @@ export declare class UserService {
         user_id: number;
     }, unknown> & {})[]>;
     getInforImageUser(imageId: number): Promise<{
-        user: import("@prisma/client/runtime").GetResult<{
+        user: import("@prisma/client/runtime/library").GetResult<{
             user_id: number;
             full_name: string;
             email: string;
@@ -29,7 +29,7 @@ export declare class UserService {
             avatar: string;
         }, unknown> & {};
         comment: ({
-            user: import("@prisma/client/runtime").GetResult<{
+            user: import("@prisma/client/runtime/library").GetResult<{
                 user_id: number;
                 full_name: string;
                 email: string;
@@ -37,28 +37,28 @@ export declare class UserService {
                 age: number;
                 avatar: string;
             }, unknown> & {};
-        } & import("@prisma/client/runtime").GetResult<{
+        } & import("@prisma/client/runtime/library").GetResult<{
             cmt_id: number;
             cmt: string;
             date_like: Date;
             user_id: number;
             image_id: number;
         }, unknown> & {})[];
-    } & import("@prisma/client/runtime").GetResult<{
+    } & import("@prisma/client/runtime/library").GetResult<{
         image_id: number;
         image_name: string;
         link: string;
         description: string;
         user_id: number;
     }, unknown> & {}>;
-    getComnent(imageId: number): Promise<import("@prisma/client/runtime").GetResult<{
+    getComnent(imageId: number): Promise<import("@prisma/client/runtime/library").GetResult<{
         cmt_id: number;
         cmt: string;
         date_like: Date;
         user_id: number;
         image_id: number;
     }, unknown> & {}>;
-    getSaveImage(imageId: number): Promise<(import("@prisma/client/runtime").GetResult<{
+    getSaveImage(imageId: number): Promise<(import("@prisma/client/runtime/library").GetResult<{
         id: number;
         date_saved: Date;
         user_id: number;
@@ -69,7 +69,7 @@ export declare class UserService {
         image_id: number;
         user_id: number;
     } | "Lỗi Be">;
-    getUser(userId: number): Promise<import("@prisma/client/runtime").GetResult<{
+    getUser(userId: number): Promise<import("@prisma/client/runtime/library").GetResult<{
         user_id: number;
         full_name: string;
         email: string;
@@ -78,21 +78,21 @@ export declare class UserService {
         avatar: string;
     }, unknown> & {}>;
     getImageList(userId: number): Promise<({
-        image: import("@prisma/client/runtime").GetResult<{
+        image: import("@prisma/client/runtime/library").GetResult<{
             image_id: number;
             image_name: string;
             link: string;
             description: string;
             user_id: number;
         }, unknown> & {};
-    } & import("@prisma/client/runtime").GetResult<{
+    } & import("@prisma/client/runtime/library").GetResult<{
         id: number;
         date_saved: Date;
         user_id: number;
         image_id: number;
     }, unknown> & {})[]>;
     getImageCreate(userId: number): Promise<({
-        user: import("@prisma/client/runtime").GetResult<{
+        user: import("@prisma/client/runtime/library").GetResult<{
             user_id: number;
             full_name: string;
             email: string;
@@ -100,14 +100,14 @@ export declare class UserService {
             age: number;
             avatar: string;
         }, unknown> & {};
-    } & import("@prisma/client/runtime").GetResult<{
+    } & import("@prisma/client/runtime/library").GetResult<{
         image_id: number;
         image_name: string;
         link: string;
         description: string;
         user_id: number;
     }, unknown> & {})[]>;
-    removeImage(imgId: number): Promise<"Lỗi BE" | "Ảnh đã xóa thành công">;
+    removeImage(imgId: number): Promise<"Ảnh đã xóa thành công" | "Lỗi BE">;
     upLoadImage(file: Express.Multer.File, userId: number): Promise<string>;
     updateUser(userId: number, values: any): Promise<string>;
 }
