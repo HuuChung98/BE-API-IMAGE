@@ -107,7 +107,7 @@ export declare class UserController {
         description: string;
         user_id: number;
     }, unknown> & {})[]>;
-    removeImage(imgId: string): Promise<"Ảnh đã xóa thành công" | "Lỗi BE">;
+    removeImage(imgId: string): Promise<"Lỗi BE" | "Ảnh đã xóa thành công">;
     upLoadImage(file: Express.Multer.File, userId: string): Promise<string>;
     updateUser(userId: string, values: any): Promise<string>;
 }

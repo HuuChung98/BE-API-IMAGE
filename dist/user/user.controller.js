@@ -134,7 +134,7 @@ __decorate([
     (0, common_1.Post)("/upload-image/:userId"),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("file", {
         storage: (0, multer_1.diskStorage)({
-            destination: "http://128.199.223.79:8080/public/img",
+            destination: process.cwd() + "/public/img",
             filename: (req, file, callback) => callback(null, new Date().getTime() + file.originalname)
         })
     })),

@@ -31,9 +31,11 @@ let UserService = exports.UserService = class UserService {
         let getInforImage = await this.prisma.image.findFirst({
             include: {
                 user: true,
-                comment: { include: {
+                comment: {
+                    include: {
                         user: true
-                    } }
+                    }
+                }
             },
             where: {
                 image_id: imageId
@@ -115,7 +117,7 @@ let UserService = exports.UserService = class UserService {
             let { destination, filename } = file;
             let uploadImage = {
                 image_name: filename,
-                link: destination + filename,
+                link: `http://localhost:8080/public/img/${filename}`,
                 user_id: userId
             };
             await this.prisma.image.create({ data: uploadImage });
