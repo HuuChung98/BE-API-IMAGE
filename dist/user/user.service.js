@@ -117,7 +117,7 @@ let UserService = exports.UserService = class UserService {
             let { destination, filename } = file;
             let uploadImage = {
                 image_name: filename,
-                link: `http://localhost:8080/public/img/${filename}`,
+                link: `http://128.199.223.79:8080/public/img/${filename}`,
                 user_id: userId
             };
             await this.prisma.image.create({ data: uploadImage });
