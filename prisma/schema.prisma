@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model comment {
+  cmt_id    Int       @id @default(autoincrement())
+  cmt       String?   @db.VarChar(100)
+  date_like DateTime? @db.DateTime(0)
+  user_id   Int?
+  image_id  Int?
+  user      user?     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "comment_ibfk_1")
+  image     image?    @relation(fields: [image_id], references: [image_id], onDelete: NoAction, onUpdate: NoAction, map: "comment_ibfk_2")
+
+  @@index([image_id], map: "image_id")
+  @@index([user_id], map: "user_id")
+}
+
+model image {
+  image_id    Int        @id @default(autoincrement())
+  image_name  String?    @db.VarChar(100)
+  link        String?    @db.VarChar(100)
+  description String?    @db.VarChar(100)
+  user_id     Int?
+  comment     comment[]
+  user        user?      @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "image_ibfk_1")
+  like_img    like_img[]
+  saved       saved[]
+
+  @@index([user_id], map: "user_id")
+}
+
+model like_img {
+  like_id   Int       @id @default(autoincrement())
+  data_like DateTime? @db.DateTime(0)
+  user_id   Int?
+  image_id  Int?
+  user      user?     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "like_img_ibfk_1")
+  image     image?    @relation(fields: [image_id], references: [image_id], onDelete: NoAction, onUpdate: NoAction, map: "like_img_ibfk_2")
+
+  @@index([image_id], map: "image_id")
+  @@index([user_id], map: "user_id")
+}
+
+model saved {
+  id         Int       @id @default(autoincrement())
+  date_saved DateTime? @db.DateTime(0)
+  user_id    Int?
+  image_id   Int?
+  user       user?     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "saved_ibfk_1")
+  image      image?    @relation(fields: [image_id], references: [image_id], onDelete: NoAction, onUpdate: NoAction, map: "saved_ibfk_2")
+
+  @@index([image_id], map: "image_id")
+  @@index([user_id], map: "user_id")
+}
+
+model user {
+  user_id   Int        @id @default(autoincrement())
+  full_name String?    @db.VarChar(100)
+  email     String?    @db.VarChar(100)
+  password  String?    @db.VarChar(100)
+  age       Int?
+  avatar    String?    @db.VarChar(100)
+  comment   comment[]
+  image     image[]
+  like_img  like_img[]
+  saved     saved[]
+}
