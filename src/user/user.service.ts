@@ -142,7 +142,7 @@ export class UserService {
       let { destination, filename } = file;
       let uploadImage = {
         image_name: filename,
-        link: `http://localhost:8080/public/img/${filename}`,
+        link: `http://128.199.223.79:8080/public/img/${filename}`,
         // link: destination,
         user_id: userId
       }
