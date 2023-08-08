@@ -28,7 +28,7 @@ let AuthService = exports.AuthService = class AuthService {
             let checkUser = await this.prisma.user.findFirst({ where: { email } });
             if (checkUser) {
                 if (bcrypt.compareSync(password, checkUser.password)) {
-                    let accessToken = await this.jwtService.signAsync({ data: "data" }, { secret: "CHUNG", expiresIn: "5h" });
+                    let accessToken = await this.jwtService.signAsync({ data: "data" }, { secret: "CHUNG", expiresIn: "30m" });
                     return { ...checkUser, token: accessToken };
                 }
                 else {

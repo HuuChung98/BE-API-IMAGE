@@ -59,7 +59,6 @@ let UserService = exports.UserService = class UserService {
     }
     async cmtImage(user_id, payload) {
         try {
-            console.log("Line 63", payload);
             const { cmt, image_id } = payload;
             const newCmt = {
                 cmt: cmt,
@@ -67,7 +66,6 @@ let UserService = exports.UserService = class UserService {
                 user_id
             };
             await this.prisma.comment.create({ data: newCmt });
-            console.log("Line 72", newCmt);
             return newCmt;
         }
         catch (error) {
@@ -119,7 +117,7 @@ let UserService = exports.UserService = class UserService {
             let { destination, filename } = file;
             let uploadImage = {
                 image_name: filename,
-                link: `http://localhost:8080/public/img/${filename}`,
+                link: `http://image.memorytera.com/public/img/${filename}`,
                 user_id: userId
             };
             await this.prisma.image.create({ data: uploadImage });
