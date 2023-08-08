@@ -72,10 +72,10 @@ export class UserService {
         image_id: Number(image_id),
         user_id
       }
-      await this.prisma.comment.create({ data: newCmt });
-      return newCmt;
+      let cmtValue = await this.prisma.comment.create({data: newCmt});
+      return cmtValue;
     } catch (error) {
-      return "Lỗi BE";
+     return "Lỗi BE";
     }
   }
 

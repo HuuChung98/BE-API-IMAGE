@@ -64,11 +64,13 @@ export declare class UserController {
         user_id: number;
         image_id: number;
     }, unknown> & {}) | " Hình chưa được lưu trong thư mục của bạn">;
-    cmtImage(user_id: any, payload: any): Promise<"Lỗi BE" | {
-        cmt: any;
-        image_id: number;
+    cmtImage(user_id: any, payload: any): Promise<(import("@prisma/client/runtime/library").GetResult<{
+        cmt_id: number;
+        cmt: string;
+        date_like: Date;
         user_id: number;
-    }>;
+        image_id: number;
+    }, unknown> & {}) | "Lỗi BE">;
     getUser(userId: string): Promise<import("@prisma/client/runtime/library").GetResult<{
         user_id: number;
         full_name: string;
