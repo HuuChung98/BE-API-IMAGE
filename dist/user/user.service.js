@@ -59,7 +59,6 @@ let UserService = exports.UserService = class UserService {
     }
     async cmtImage(user_id, payload) {
         try {
-            console.log("Line 63", payload);
             const { cmt, image_id } = payload;
             const newCmt = {
                 cmt: cmt,
@@ -67,11 +66,10 @@ let UserService = exports.UserService = class UserService {
                 user_id
             };
             await this.prisma.comment.create({ data: newCmt });
-            console.log("Line 72", newCmt);
             return newCmt;
         }
         catch (error) {
-            return "Lỗi Be";
+            return "Lỗi BE";
         }
     }
     async getUser(userId) {

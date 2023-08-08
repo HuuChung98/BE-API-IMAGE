@@ -65,9 +65,7 @@ export class UserService {
   }
 
   async cmtImage(user_id: number, payload) {
-
     try {
-      console.log("Line 63", payload);
       const { cmt, image_id } = payload;
       const newCmt = {
         cmt: cmt,
@@ -75,19 +73,9 @@ export class UserService {
         user_id
       }
       await this.prisma.comment.create({ data: newCmt });
-      // return "Đã đăng bình luận";
-      console.log("Line 72", newCmt);
-      // let userCmt = await this.prisma.comment.findMany(
-      //   {
-      //     where: {
-      //       image_id: Number(image_id)
-      //     }
-      //   }
-
-      // );
       return newCmt;
     } catch (error) {
-      return "Lỗi Be"
+      return "Lỗi BE";
     }
   }
 
@@ -175,7 +163,7 @@ export class UserService {
         // return "Cập nhật thành công";
         return updateUser;
       } else {
-        throw new HttpException({content: "Email đã tồn tại", code: 404}, 404);
+        throw new HttpException({ content: "Email đã tồn tại", code: 404 }, 404);
       }
 
     } catch (error) {

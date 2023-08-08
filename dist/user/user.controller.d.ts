@@ -64,7 +64,7 @@ export declare class UserController {
         user_id: number;
         image_id: number;
     }, unknown> & {}) | " Hình chưa được lưu trong thư mục của bạn">;
-    cmtImage(user_id: any, payload: any): Promise<"Lỗi Be" | {
+    cmtImage(user_id: any, payload: any): Promise<"Lỗi BE" | {
         cmt: any;
         image_id: number;
         user_id: number;
@@ -92,7 +92,7 @@ export declare class UserController {
         image_id: number;
     }, unknown> & {})[]>;
     getImageCreate(userId: string): Promise<any>;
-    removeImage(imgId: string): Promise<"Ảnh đã xóa thành công" | "Lỗi BE">;
+    removeImage(imgId: string): Promise<"Lỗi BE" | "Ảnh đã xóa thành công">;
     upLoadImage(file: Express.Multer.File, userId: string): Promise<"Upload ảnh thành công" | "Upload ảnh không thành công">;
     updateUser(userId: string, values: any): Promise<{
         full_name: any;
