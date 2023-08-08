@@ -11,7 +11,7 @@ export class AuthService {
 
   constructor(
     private jwtService: JwtService,
-    private configService: ConfigService // khai báo dẫn đến KEY được định nghĩa trong .evn file
+    private configService: ConfigService
   ) { };
 
 
@@ -28,13 +28,12 @@ export class AuthService {
         if (bcrypt.compareSync(password, checkUser.password)) {
 
           // let accessToken = this.jwtService.signAsync({ data: "data" }, { secret: this.configService.get("KEY"), expiresIn: "4d" });
-          let accessToken = this.jwtService.signAsync({ data: "data" }, { secret: "CHUNG", expiresIn: "4d" });
+          let accessToken = await this.jwtService.signAsync({ data: "data" }, { secret: "CHUNG", expiresIn: "5h" });
 
-
-          return checkUser;
-          // console.log(accessToken);
+          return { ...checkUser, token: accessToken };
 
         }
+
         else {
           // return "Mật khẩu không đúng";  // sai
           throw new HttpException({ content: "tài khoản hoặc mật khẩu không đúng" }, 404);
@@ -58,10 +57,8 @@ export class AuthService {
     try {
       let { full_name, email, password } = userSignUp;
       let checkUser = await this.prisma.user.findFirst({ where: { email: email } });
-      if (checkUser) {
-        return "Email đã tồn tại";
-
-      } else {
+      if (!checkUser) {
+        // return "Email đã tồn tại";
         let newUser = {
           full_name,
           email,
@@ -71,10 +68,15 @@ export class AuthService {
         await this.prisma.user.create({ data: newUser });
 
         return "Đăng kí thành công";
+
+      } else {
+        throw new HttpException({ content: "Email đã tồn tại", code: 404 }, 404)
+        // return "Email đã đăng kí bởi tài khoản khác"
       }
-      // return "Đăng kí không thành công";
-    } catch {
-      throw new HttpException("Lỗi BE", 500);
+
+    } catch (error) {
+      // throw new HttpException("Lỗi BE", 500);
+      throw new HttpException(error.response.content, error.status);
     }
 
   }

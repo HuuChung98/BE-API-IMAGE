@@ -28,8 +28,8 @@ let AuthService = exports.AuthService = class AuthService {
             let checkUser = await this.prisma.user.findFirst({ where: { email } });
             if (checkUser) {
                 if (bcrypt.compareSync(password, checkUser.password)) {
-                    let accessToken = this.jwtService.signAsync({ data: "data" }, { secret: "CHUNG", expiresIn: "4d" });
-                    return checkUser;
+                    let accessToken = await this.jwtService.signAsync({ data: "data" }, { secret: "CHUNG", expiresIn: "5h" });
+                    return { ...checkUser, token: accessToken };
                 }
                 else {
                     throw new common_1.HttpException({ content: "tài khoản hoặc mật khẩu không đúng" }, 404);
@@ -48,10 +48,7 @@ let AuthService = exports.AuthService = class AuthService {
         try {
             let { full_name, email, password } = userSignUp;
             let checkUser = await this.prisma.user.findFirst({ where: { email: email } });
-            if (checkUser) {
-                return "Email đã tồn tại";
-            }
-            else {
+            if (!checkUser) {
                 let newUser = {
                     full_name,
                     email,
@@ -60,9 +57,12 @@ let AuthService = exports.AuthService = class AuthService {
                 await this.prisma.user.create({ data: newUser });
                 return "Đăng kí thành công";
             }
+            else {
+                throw new common_1.HttpException({ content: "Email đã tồn tại", code: 404 }, 404);
+            }
         }
-        catch {
-            throw new common_1.HttpException("Lỗi BE", 500);
+        catch (error) {
+            throw new common_1.HttpException(error.response.content, error.status);
         }
     }
 };

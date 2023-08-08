@@ -2,13 +2,14 @@ import { AuthService } from './auth.service';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
-    login(body: any): Promise<import("@prisma/client/runtime/library").GetResult<{
-        user_id: number;
-        full_name: string;
+    login(body: any): Promise<{
+        token: string;
         email: string;
         password: string;
+        user_id: number;
+        full_name: string;
         age: number;
         avatar: string;
-    }, unknown> & {}>;
-    signUp(body: any): Promise<"Email đã tồn tại" | "Đăng kí thành công">;
+    }>;
+    signUp(body: any): Promise<string>;
 }

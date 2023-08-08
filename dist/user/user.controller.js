@@ -18,6 +18,7 @@ const user_service_1 = require("./user.service");
 const jwt_1 = require("@nestjs/jwt");
 const platform_express_1 = require("@nestjs/platform-express");
 const multer_1 = require("multer");
+const passport_1 = require("@nestjs/passport");
 let UserController = exports.UserController = class UserController {
     constructor(userService, jwtService) {
         this.userService = userService;
@@ -153,6 +154,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "updateUser", null);
 exports.UserController = UserController = __decorate([
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)("jwt")),
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService, jwt_1.JwtService])
 ], UserController);

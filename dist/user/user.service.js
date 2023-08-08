@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
+const bcrypt = require("bcrypt");
 const update_user_dto_1 = require("./dto/update-user.dto");
 const client_1 = require("@prisma/client");
 let UserService = exports.UserService = class UserService {
@@ -101,6 +102,7 @@ let UserService = exports.UserService = class UserService {
             return imageCreateByUser;
         }
         catch (error) {
+            return error;
         }
     }
     async removeImage(imgId) {
@@ -117,33 +119,38 @@ let UserService = exports.UserService = class UserService {
             let { destination, filename } = file;
             let uploadImage = {
                 image_name: filename,
-                link: `http://128.199.223.79:8080/public/img/${filename}`,
+                link: `http://localhost:8080/public/img/${filename}`,
                 user_id: userId
             };
             await this.prisma.image.create({ data: uploadImage });
             return "Upload ảnh thành công";
         }
         catch (error) {
-            throw new common_1.HttpException(error.response.content, error.status);
+            return "Upload ảnh không thành công";
         }
     }
     async updateUser(userId, values) {
         try {
             let { full_name, email, password, age, avatar } = values;
             console.log(values);
-            let updateUser = {
-                full_name,
-                email,
-                password,
-                age: Number(age),
-                avatar
-            };
-            let update = await this.prisma.user.update({ data: updateUser, where: { user_id: userId } });
-            console.log(update);
-            return "Cập nhật thành công";
+            let checkUser = await this.prisma.user.findFirst({ where: { email: email } });
+            if (!checkUser) {
+                let updateUser = {
+                    full_name,
+                    email,
+                    password: await bcrypt.hash(password, 10),
+                    age: Number(age),
+                    avatar
+                };
+                await this.prisma.user.update({ data: updateUser, where: { user_id: userId } });
+                return updateUser;
+            }
+            else {
+                throw new common_1.HttpException({ content: "Email đã tồn tại", code: 404 }, 404);
+            }
         }
         catch (error) {
-            console.log(error);
+            throw new common_1.HttpException(error.response.content, error.status);
         }
     }
 };

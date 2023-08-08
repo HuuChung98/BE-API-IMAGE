@@ -91,23 +91,14 @@ export declare class UserController {
         user_id: number;
         image_id: number;
     }, unknown> & {})[]>;
-    getImageCreate(userId: string): Promise<({
-        user: import("@prisma/client/runtime/library").GetResult<{
-            user_id: number;
-            full_name: string;
-            email: string;
-            password: string;
-            age: number;
-            avatar: string;
-        }, unknown> & {};
-    } & import("@prisma/client/runtime/library").GetResult<{
-        image_id: number;
-        image_name: string;
-        link: string;
-        description: string;
-        user_id: number;
-    }, unknown> & {})[]>;
-    removeImage(imgId: string): Promise<"Lỗi BE" | "Ảnh đã xóa thành công">;
-    upLoadImage(file: Express.Multer.File, userId: string): Promise<string>;
-    updateUser(userId: string, values: any): Promise<string>;
+    getImageCreate(userId: string): Promise<any>;
+    removeImage(imgId: string): Promise<"Ảnh đã xóa thành công" | "Lỗi BE">;
+    upLoadImage(file: Express.Multer.File, userId: string): Promise<"Upload ảnh thành công" | "Upload ảnh không thành công">;
+    updateUser(userId: string, values: any): Promise<{
+        full_name: any;
+        email: any;
+        password: string;
+        age: number;
+        avatar: any;
+    }>;
 }

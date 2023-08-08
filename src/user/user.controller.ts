@@ -8,7 +8,7 @@ import { diskStorage } from 'multer';
 import { AuthGuard } from '@nestjs/passport';
 
 // Thêm JWT để khóa hết các API của controller
-// @UseGuards(AuthGuard("jwt")) // jwt là key mặc định
+@UseGuards(AuthGuard("jwt")) // jwt là key mặc định
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService, private jwtService: JwtService) { }
