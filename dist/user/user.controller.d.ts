@@ -1,6 +1,17 @@
 /// <reference types="multer" />
 import { UserService } from './user.service';
 import { JwtService } from '@nestjs/jwt';
+declare class Comment {
+    cmt: string;
+    image_id: number;
+}
+declare class UpdateUser {
+    full_name: string;
+    email: string;
+    password: string;
+    age: string;
+    avatar: string;
+}
 export declare class UserController {
     private readonly userService;
     private jwtService;
@@ -64,13 +75,13 @@ export declare class UserController {
         user_id: number;
         image_id: number;
     }, unknown> & {}) | " Hình chưa được lưu trong thư mục của bạn">;
-    cmtImage(user_id: any, payload: any): Promise<(import("@prisma/client/runtime/library").GetResult<{
+    cmtImage(user_id: string, payload: Comment): Promise<(import("@prisma/client/runtime/library").GetResult<{
         cmt_id: number;
         cmt: string;
         date_like: Date;
         user_id: number;
         image_id: number;
-    }, unknown> & {}) | "Lỗi BE">;
+    }, unknown> & {}) | "Bình luận không thành công">;
     getUser(userId: string): Promise<import("@prisma/client/runtime/library").GetResult<{
         user_id: number;
         full_name: string;
@@ -94,9 +105,9 @@ export declare class UserController {
         image_id: number;
     }, unknown> & {})[]>;
     getImageCreate(userId: string): Promise<any>;
-    removeImage(imgId: string): Promise<"Lỗi BE" | "Ảnh đã xóa thành công">;
+    removeImage(imgId: string): Promise<"Ảnh đã xóa thành công" | "Lỗi BE">;
     upLoadImage(file: Express.Multer.File, userId: string): Promise<"Upload ảnh thành công" | "Upload ảnh không thành công">;
-    updateUser(userId: string, values: any): Promise<{
+    updateUser(userId: string, values: UpdateUser): Promise<{
         full_name: any;
         email: any;
         password: string;
@@ -104,3 +115,4 @@ export declare class UserController {
         avatar: any;
     }>;
 }
+export {};

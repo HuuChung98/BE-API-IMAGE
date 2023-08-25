@@ -75,7 +75,7 @@ export class UserService {
       let cmtValue = await this.prisma.comment.create({data: newCmt});
       return cmtValue;
     } catch (error) {
-     return "Lỗi BE";
+     return "Bình luận không thành công";
     }
   }
 

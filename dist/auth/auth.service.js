@@ -22,9 +22,9 @@ let AuthService = exports.AuthService = class AuthService {
         this.prisma = new client_1.PrismaClient();
     }
     ;
-    async login(userLogIn) {
+    async login(createAuthDto) {
         try {
-            let { email, password } = userLogIn;
+            let { email, password } = createAuthDto;
             let checkUser = await this.prisma.user.findFirst({ where: { email } });
             if (checkUser) {
                 if (bcrypt.compareSync(password, checkUser.password)) {

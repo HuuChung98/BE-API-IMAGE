@@ -70,7 +70,7 @@ export declare class UserService {
         date_like: Date;
         user_id: number;
         image_id: number;
-    }, unknown> & {}) | "Lỗi BE">;
+    }, unknown> & {}) | "Bình luận không thành công">;
     getUser(userId: number): Promise<import("@prisma/client/runtime/library").GetResult<{
         user_id: number;
         full_name: string;
@@ -94,7 +94,7 @@ export declare class UserService {
         image_id: number;
     }, unknown> & {})[]>;
     getImageCreate(userId: number): Promise<any>;
-    removeImage(imgId: number): Promise<"Lỗi BE" | "Ảnh đã xóa thành công">;
+    removeImage(imgId: number): Promise<"Ảnh đã xóa thành công" | "Lỗi BE">;
     upLoadImage(file: Express.Multer.File, userId: number): Promise<"Upload ảnh thành công" | "Upload ảnh không thành công">;
     updateUser(userId: number, values: any): Promise<{
         full_name: any;

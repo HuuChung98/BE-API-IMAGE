@@ -27,6 +27,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/passport": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^7.1.8",
     "@prisma/client": "^5.0.0",
     "@types/passport-jwt": "^3.0.9",
     "bcrypt": "^5.1.0",
@@ -38,7 +39,8 @@
     "passport-local": "^1.0.0",
     "prisma": "^4.16.2",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "swagger-ui-express": "^5.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

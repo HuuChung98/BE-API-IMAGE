@@ -19,6 +19,45 @@ const jwt_1 = require("@nestjs/jwt");
 const platform_express_1 = require("@nestjs/platform-express");
 const multer_1 = require("multer");
 const passport_1 = require("@nestjs/passport");
+const swagger_1 = require("@nestjs/swagger");
+class Comment {
+}
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: "cmt", type: String }),
+    __metadata("design:type", String)
+], Comment.prototype, "cmt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: "image_id", type: Number }),
+    __metadata("design:type", Number)
+], Comment.prototype, "image_id", void 0);
+class FileUploadDto {
+}
+__decorate([
+    (0, swagger_1.ApiProperty)({ type: 'string', format: 'binary' }),
+    __metadata("design:type", Object)
+], FileUploadDto.prototype, "file", void 0);
+class UpdateUser {
+}
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: "fullName", type: String }),
+    __metadata("design:type", String)
+], UpdateUser.prototype, "full_name", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: "email", type: String }),
+    __metadata("design:type", String)
+], UpdateUser.prototype, "email", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: "password", type: String }),
+    __metadata("design:type", String)
+], UpdateUser.prototype, "password", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: "age", type: String }),
+    __metadata("design:type", String)
+], UpdateUser.prototype, "age", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: "avatar", type: String }),
+    __metadata("design:type", String)
+], UpdateUser.prototype, "avatar", void 0);
 let UserController = exports.UserController = class UserController {
     constructor(userService, jwtService) {
         this.userService = userService;
@@ -100,7 +139,7 @@ __decorate([
     __param(0, (0, common_1.Param)("user_id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [String, Comment]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "cmtImage", null);
 __decorate([
@@ -132,13 +171,18 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "removeImage", null);
 __decorate([
-    (0, common_1.Post)("/upload-image/:userId"),
+    (0, swagger_1.ApiConsumes)('multipart/form-data'),
+    (0, swagger_1.ApiBody)({
+        description: 'file',
+        type: FileUploadDto
+    }),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)("file", {
         storage: (0, multer_1.diskStorage)({
             destination: process.cwd() + "/public/img",
             filename: (req, file, callback) => callback(null, new Date().getTime() + file.originalname)
         })
     })),
+    (0, common_1.Post)("/upload-image/:userId"),
     __param(0, (0, common_1.UploadedFile)()),
     __param(1, (0, common_1.Param)("userId")),
     __metadata("design:type", Function),
@@ -150,11 +194,13 @@ __decorate([
     __param(0, (0, common_1.Param)('user_id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, UpdateUser]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "updateUser", null);
 exports.UserController = UserController = __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)("jwt")),
+    (0, swagger_1.ApiTags)("User"),
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService, jwt_1.JwtService])
 ], UserController);

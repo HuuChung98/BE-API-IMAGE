@@ -69,7 +69,7 @@ let UserService = exports.UserService = class UserService {
             return cmtValue;
         }
         catch (error) {
-            return "Lỗi BE";
+            return "Bình luận không thành công";
         }
     }
     async getUser(userId) {

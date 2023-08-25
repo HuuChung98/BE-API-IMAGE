@@ -17,9 +17,9 @@ export class AuthService {
 
   prisma = new PrismaClient();
 
-  async login(userLogIn) {
+  async login(createAuthDto) {
     try {
-      let { email, password } = userLogIn;
+      let { email, password } = createAuthDto;
       let checkUser = await this.prisma.user.findFirst({ where: { email } });
 
       if (checkUser) {

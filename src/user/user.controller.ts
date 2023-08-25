@@ -1,14 +1,45 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Put, Query, UseGuards, Headers, HttpException } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiProperty, ApiTags } from '@nestjs/swagger';
 
+class Comment {
+  @ApiProperty({description: "cmt", type: String})
+  cmt: string
+
+  @ApiProperty({description: "image_id", type: Number})
+  image_id: number
+}
+
+class FileUploadDto {
+  @ApiProperty({type: 'string', format: 'binary'})
+  file: any;
+}
+
+class UpdateUser {
+  @ApiProperty({description: "fullName", type: String})
+  full_name: string
+
+  @ApiProperty({description: "email", type: String})
+  email: string
+
+  @ApiProperty({description: "password", type: String})
+  password: string
+
+  @ApiProperty({description: "age", type: String})
+  age: string
+
+  @ApiProperty({description: "avatar", type: String})
+  avatar: string
+  
+}
+@ApiBearerAuth()
 // Thêm JWT để khóa hết các API của controller
 @UseGuards(AuthGuard("jwt")) // jwt là key mặc định
+@ApiTags("User")
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService, private jwtService: JwtService) { }
@@ -45,7 +76,7 @@ export class UserController {
 
   // API post thông tin bình luận ảnh 
   @Post("/get-image/give-cmt/:user_id")
-  cmtImage(@Param("user_id") user_id, @Body() payload) {
+  cmtImage(@Param("user_id") user_id: string, @Body() payload: Comment) {
     return this.userService.cmtImage(+user_id, payload)
   }
 
@@ -74,8 +105,13 @@ export class UserController {
   }
 
   // API post thêm ảnh của một user
-  @Post("/upload-image/:userId")
+  
   // Tạo một middle ở giữa để xử lý ảnh
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'file',
+    type: FileUploadDto
+  })
   @UseInterceptors(FileInterceptor("file",
     {
       storage: diskStorage({
@@ -84,13 +120,14 @@ export class UserController {
       })
     }
   ))
+  @Post("/upload-image/:userId")
   upLoadImage(@UploadedFile() file: Express.Multer.File, @Param("userId") userId: string) {
     return this.userService.upLoadImage(file, Number(userId));
   }
 
   // API PUT thông tin cá nhân của user
   @Patch("/update-user/:user_id")
-  updateUser(@Param('user_id') userId: string, @Body() values) {
+  updateUser(@Param('user_id') userId: string, @Body() values: UpdateUser) {
     return this.userService.updateUser(+userId, values);
   }
 }
