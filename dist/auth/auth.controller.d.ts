@@ -10,10 +10,10 @@ export declare class AuthController {
     constructor(authService: AuthService);
     login(createAuthDto: CreateAuthDto): Promise<{
         token: string;
-        full_name: string;
         email: string;
         password: string;
         user_id: number;
+        full_name: string;
         age: number;
         avatar: string;
     }>;

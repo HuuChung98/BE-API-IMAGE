@@ -15,11 +15,11 @@ class CreateAuthDto {
 }
 exports.CreateAuthDto = CreateAuthDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ description: "fullname", type: String }),
-    __metadata("design:type", String)
-], CreateAuthDto.prototype, "full_name", void 0);
-__decorate([
     (0, swagger_1.ApiProperty)({ description: "email", type: String }),
     __metadata("design:type", String)
 ], CreateAuthDto.prototype, "email", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: "password", type: String }),
+    __metadata("design:type", String)
+], CreateAuthDto.prototype, "password", void 0);
 //# sourceMappingURL=create-auth.dto.js.map

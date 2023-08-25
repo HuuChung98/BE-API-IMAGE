@@ -8,10 +8,10 @@ export declare class AuthService {
     prisma: PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import("@prisma/client/runtime/library").DefaultArgs>;
     login(createAuthDto: any): Promise<{
         token: string;
-        full_name: string;
         email: string;
         password: string;
         user_id: number;
+        full_name: string;
         age: number;
         avatar: string;
     }>;
